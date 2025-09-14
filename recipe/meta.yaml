@@ -1,5 +1,5 @@
 {% set name = "uv-dynamic-versioning" %}
-{% set version = "0.11.0" %}
+{% set version = "0.11.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/uv_dynamic_versioning-{{ version }}.tar.gz
-  sha256: "0dc2aac525d7db15a69b4f1317040d2fd7df71d1f1ae7171cb85080c2b998c23"
+  sha256: "4b71f9c3cb0f48727ba8d12b7164f204a3bef4af8d7aa99faf455dd4b35e4a24"
 
 build:
   noarch: python
