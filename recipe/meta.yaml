@@ -61,6 +61,7 @@ test:
     - tests/
   requires:
     - pip
+    - git
     - pytest >=8.4.2,<8.5.0
     - gitpython >=3.1.45,<3.2.0
   commands:
