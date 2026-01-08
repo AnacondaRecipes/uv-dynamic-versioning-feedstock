@@ -25,40 +25,13 @@ requirements:
     - jinja2 >=3.0,<4
     - tomlkit >=0.13,<1
 
-# Skip tests that require git repository (not present in PYPI package)
-{% set skip_git_tests = [
-    "test_get_version_with_bump",
-    "test_get_version_with_semver_tag",
-    "test_get_version_with_prerelease_tag",
-    "test_get_version_with_dev_tag",
-    "test_get_version_with_bypass",
-    "test_get_version_with_bypass_with_format",
-    "test_get_version_with_invalid_combination_of_format_jinja_and_style",
-    "test_without_dynamic_dependencies",
-    "test_without_dependencies_in_config",
-    "test_render_dependencies_with_semver",
-    "test_render_dependencies_with_dirty",
-    "test_render_dependencies_with_prerelease_tag",
-    "test_render_dependencies_with_bypass_with_semver_tag",
-    "test_render_dependencies_with_bypass_and_prerelease_tag",
-    "test_render_dependencies_with_bypass_and_dev_tag",
-    "test_with_semver_tag",
-    "test_with_prerelease_tag",
-    "test_with_dev_tag",
-    "test_with_semver",
-    "test_with_format",
-    "test_with_bump",
-    "test_with_dirty",
-    "test_with_jinja2_format",
-    "test_with_pattern",
-    "test_from_file"
-] %}
-
 test:
   imports:
     - uv_dynamic_versioning
   source_files:
-    - tests/
+    - tests
+    # pyproject.toml is explicitly used in the tests
+    - pyproject.toml
   requires:
     - pip
     - git
@@ -66,7 +39,14 @@ test:
     - gitpython >=3.1.45,<3.2.0
   commands:
     - pip check
-    - pytest tests/ -k "not ({{ skip_git_tests|join(' or ') }})"
+    # The tests want a git repo to work in and assume they are in
+    # $SRC_DIR -- we aren't so create one
+    - git init .
+    - git config user.email you@example.com
+    - git config user.name "Your Name"
+    - git add .
+    - git commit -m "dummy commit"
+    - pytest tests
 
 about:
   home: https://github.com/ninoseki/uv-dynamic-versioning
