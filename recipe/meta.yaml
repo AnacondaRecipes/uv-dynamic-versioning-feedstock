@@ -1,17 +1,19 @@
 {% set name = "uv-dynamic-versioning" %}
-{% set version = "0.12.0" %}
+{% set version = "0.14.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name|replace("-", "_") }}-{{ version }}.tar.gz
-  sha256: e853e0c5b2425a68005580325d4975a8c37b66015589ca45ef96e660fe0f8f16
+  sha256: 8642db686ce5c50417035e7a257ac73b7e5c3a7a32c33e45bd7e36ba22eeb648
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true # [py<39]
+  entry_points:
+    - uv-dynamic-versioning = uv_dynamic_versioning.cli:main
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -20,8 +22,8 @@ requirements:
     - hatchling
   run:
     - python
-    - dunamai >=1.25,<2
-    - hatchling >=1.26,<2
+    - dunamai >=1.26.1,<2
+    - hatchling >=1.28,<2
     - jinja2 >=3.0,<4
     - tomlkit >=0.13,<1
 
